@@ -1,0 +1,9 @@
+@media(max-width: 456px) {
+	.icons {
+		margin-top: 15px;
+	}
+}
+
+.icons svg {
+	cursor: pointer;
+}
