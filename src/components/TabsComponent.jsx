@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
+import NobodyComponent from './NobodyComponent'
 import TodoListComponent from './TodoListComponent'
 
 export default class TabsComponent extends Component {
@@ -11,7 +12,7 @@ export default class TabsComponent extends Component {
 		const { key } = this.state
 
 		const favoriteCount = todos?.filter(item => item.favorite).length || 0
-		
+
 		return (
 			<Tabs fill defaultActiveKey='all' className='mb-3' variant='pills'>
 				<Tab
@@ -19,24 +20,10 @@ export default class TabsComponent extends Component {
 					eventKey='all'
 					title='All'
 				>
-					{todos?.map((item, index) => (
-						<TodoListComponent
-							deleteTodo={deleteTodo}
-							handleFavorite={handleFavorite}
-							key={index}
-							editTodo={editTodo}
-							{...item}
-						/>
-					))}
-				</Tab>
-				<Tab
-					onClick={() => this.setState({ key: 'favorites' })}
-					eventKey='favorites'
-					title={`Favorites(${favoriteCount})`}
-				>
-					{todos
-						?.filter(item => item.favorite)
-						.map((item, index) => (
+					{todos.length == 0 ? (
+						<NobodyComponent />
+					) : (
+						todos?.map((item, index) => (
 							<TodoListComponent
 								deleteTodo={deleteTodo}
 								handleFavorite={handleFavorite}
@@ -44,7 +31,29 @@ export default class TabsComponent extends Component {
 								editTodo={editTodo}
 								{...item}
 							/>
-						))}
+						))
+					)}
+				</Tab>
+				<Tab
+					onClick={() => this.setState({ key: 'favorites' })}
+					eventKey='favorites'
+					title={`Favorites(${favoriteCount})`}
+				>
+					{favoriteCount == 0 ? (
+						<NobodyComponent />
+					) : (
+						todos
+							?.filter(item => item.favorite)
+							.map((item, index) => (
+								<TodoListComponent
+									deleteTodo={deleteTodo}
+									handleFavorite={handleFavorite}
+									key={index}
+									editTodo={editTodo}
+									{...item}
+								/>
+							))
+					)}
 				</Tab>
 			</Tabs>
 		)
