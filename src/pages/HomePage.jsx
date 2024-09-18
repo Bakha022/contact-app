@@ -111,8 +111,7 @@ export default class HomePage extends Component {
 			const newTodos = todos.filter(item => item.id !== id)
 			localStorage.setItem('todos', JSON.stringify(newTodos))
 			this.setState({ todos: newTodos })
-			toast.success('Contact deleted')
-
+			toast.error('Contact deleted')
 		}
 
 		const editTodo = id => {
